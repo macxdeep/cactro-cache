@@ -13,7 +13,7 @@ const port = process.env.PORT || 3000;
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.get('/', (req, res) => {
-    res.send('Express + TypeScript Server');
+    res.send('Welcome to Cactro Cache API');
 });
 // ROUTES
 app.use('/cache', cache_route_1.default);
