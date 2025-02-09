@@ -25,7 +25,7 @@ The cache is loaded into memory when the server starts, allowing for fast access
 
 ```
 curl --request POST \
-  --url http://localhost:3000/cache/ \
+  --url https://cactro-cache.vercel.app/cache/ \
   --header 'Content-Type: application/json' \
   --header 'User-Agent: insomnia/10.3.0' \
   --data '{
@@ -40,7 +40,7 @@ curl --request POST \
 
 ```
 curl --request GET \
-  --url http://localhost:3000/cache/30 \
+  --url https://cactro-cache.vercel.app/cache/30 \
   --header 'User-Agent: insomnia/10.3.0'
 ```
 
@@ -48,7 +48,7 @@ curl --request GET \
 
 ```
 curl --request DELETE \
-  --url http://localhost:3000/cache/30 \
+  --url https://cactro-cache.vercel.app/cache/30 \
   --header 'User-Agent: insomnia/10.3.0'
 ```
 
