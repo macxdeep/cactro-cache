@@ -24,7 +24,7 @@ const addCache = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 .json((0, apiResponse_1.failureResponse)(new Error('key and value are required!')));
             return;
         }
-        CacheStore_1.default.set(key, value);
+        CacheStore_1.default.set(key.toString(), value); // stringify the key
         res.status(201).json((0, apiResponse_1.successResponse)({ key, value }));
     }
     catch (error) {

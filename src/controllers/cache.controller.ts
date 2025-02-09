@@ -18,7 +18,7 @@ export const addCache = async (
       return;
     }
 
-    CacheStore.set(key, value);
+    CacheStore.set(key.toString(), value); // stringify the key
 
     res.status(201).json(successResponse({key, value}));
   } catch (error) {
