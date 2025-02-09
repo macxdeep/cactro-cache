@@ -6,20 +6,13 @@ class CacheStore {
   private filePath: string;
 
   constructor(fileName = 'store.json') {
-    this.filePath = path.join(process.cwd(), 'data', fileName);
+    this.filePath = path.join(__dirname, fileName);
     this.cache = new Map<string, string>();
 
     this.loadCache(); // Load cache from file on startup
   }
 
   private loadCache() {
-    const dir = path.dirname(this.filePath);
-
-    // create folder
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, {recursive: true}); // Create 'data/' if not exists
-    }
-
     if (fs.existsSync(this.filePath)) {
       try {
         const data = fs.readFileSync(this.filePath, 'utf-8');

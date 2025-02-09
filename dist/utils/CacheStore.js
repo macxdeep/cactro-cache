@@ -7,16 +7,11 @@ const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 class CacheStore {
     constructor(fileName = 'store.json') {
-        this.filePath = path_1.default.join(process.cwd(), 'data', fileName);
+        this.filePath = path_1.default.join(__dirname, fileName);
         this.cache = new Map();
         this.loadCache(); // Load cache from file on startup
     }
     loadCache() {
-        const dir = path_1.default.dirname(this.filePath);
-        // create folder
-        if (!fs_1.default.existsSync(dir)) {
-            fs_1.default.mkdirSync(dir, { recursive: true }); // Create 'data/' if not exists
-        }
         if (fs_1.default.existsSync(this.filePath)) {
             try {
                 const data = fs_1.default.readFileSync(this.filePath, 'utf-8');
