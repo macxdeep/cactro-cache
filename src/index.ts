@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import cacheRouter from './routes/cache.route';
+import {apiKeyMiddleware} from './middlewares/apiKey.middleware';
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 // ROUTES
-app.use('/cache', cacheRouter);
+app.use('/cache', apiKeyMiddleware, cacheRouter);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
