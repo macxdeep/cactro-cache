@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
 const cache_route_1 = __importDefault(require("./routes/cache.route"));
+const apiKey_middleware_1 = require("./middlewares/apiKey.middleware");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
@@ -16,7 +17,7 @@ app.get('/', (req, res) => {
     res.send('Welcome to Cactro Cache API');
 });
 // ROUTES
-app.use('/cache', cache_route_1.default);
+app.use('/cache', apiKey_middleware_1.apiKeyMiddleware, cache_route_1.default);
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
 });
