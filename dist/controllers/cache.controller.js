@@ -17,16 +17,18 @@ const apiResponse_1 = require("../utils/apiResponse");
 const CacheStore_1 = __importDefault(require("../utils/CacheStore"));
 const addCache = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log(req.body);
         const { key, value } = req.body;
         if (!key || !value) {
-            throw new Error('Key and value are required!');
+            res
+                .status(400)
+                .json((0, apiResponse_1.failureResponse)(new Error('key and value are required!')));
+            return;
         }
         CacheStore_1.default.set(key, value);
-        return res.status(201).json((0, apiResponse_1.successResponse)({ key, value }));
+        res.status(201).json((0, apiResponse_1.successResponse)({ key, value }));
     }
     catch (error) {
-        return res.status(500).json((0, apiResponse_1.failureResponse)(error));
+        res.status(500).json((0, apiResponse_1.failureResponse)(error));
     }
 });
 exports.addCache = addCache;
@@ -34,20 +36,20 @@ const getCache = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { key } = req.params;
         if (!key) {
-            throw new Error('Key is missing!');
+            res.status(400).json((0, apiResponse_1.failureResponse)(new Error('key is missing!')));
+            return;
         }
         const value = CacheStore_1.default.get(key);
         if (!value) {
-            return res
+            res
                 .status(404)
                 .json((0, apiResponse_1.failureResponse)(new Error('Key not found in store.')));
+            return;
         }
-        else {
-            return res.status(201).json((0, apiResponse_1.successResponse)(value));
-        }
+        res.status(201).json((0, apiResponse_1.successResponse)(value));
     }
     catch (error) {
-        return res.status(500).json((0, apiResponse_1.failureResponse)(error));
+        res.status(500).json((0, apiResponse_1.failureResponse)(error));
     }
 });
 exports.getCache = getCache;
@@ -55,20 +57,17 @@ const deleteCache = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     try {
         const { key } = req.params;
         if (!key) {
-            return res
-                .status(400)
-                .json((0, apiResponse_1.failureResponse)(new Error('Key and value are required!')));
+            res.status(400).json((0, apiResponse_1.failureResponse)(new Error('key is required!')));
+            return;
         }
         const deleted = CacheStore_1.default.delete(key);
         if (!deleted) {
-            return res.status(404).json((0, apiResponse_1.failureResponse)(new Error('Key not found')));
+            res.status(404).json((0, apiResponse_1.failureResponse)(new Error('Key not found')));
         }
-        else {
-            return res.status(200).json((0, apiResponse_1.successResponse)('Deleted successfully!'));
-        }
+        res.status(200).json((0, apiResponse_1.successResponse)(deleted));
     }
     catch (error) {
-        return (0, apiResponse_1.failureResponse)(error);
+        res.status(500).json((0, apiResponse_1.failureResponse)(error));
     }
 });
 exports.deleteCache = deleteCache;
